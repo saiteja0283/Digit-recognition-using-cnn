@@ -1,0 +1,51 @@
+def preprocess_image(image_path):
+
+    # Open image
+    img = Image.open(image_path).convert('L')
+
+    # Improve image contrast
+    img = ImageOps.autocontrast(img)
+
+    # Convert image to black and white
+    img = img.point(lambda p: 255 if p > 120 else 0)
+
+    # Invert if background is mostly white
+    arr = np.array(img)
+
+    border = np.concatenate([
+        arr[0, :],
+        arr[-1, :],
+        arr[:, 0],
+        arr[:, -1]
+    ])
+
+    if np.mean(border) > 127:
+        img = ImageOps.invert(img)
+
+    # Crop digit
+    bbox = img.getbbox()
+
+    if bbox is None:
+        raise ValueError("No digit detected in image!")
+
+    img = img.crop(bbox)
+
+    # Resize image
+    img.thumbnail((20, 20), Image.Resampling.LANCZOS)
+
+    # Create 28x28 black canvas
+    canvas = Image.new('L', (28, 28), 0)
+
+    # Center the digit
+    x = (28 - img.width) // 2
+    y = (28 - img.height) // 2
+
+    canvas.paste(img, (x, y))
+
+    # Normalize image
+    img_array = np.array(canvas).astype('float32') / 255.0
+
+    # Reshape for CNN
+    img_array = img_array.reshape(1, 28, 28, 1)
+
+    return img_array, canvas
