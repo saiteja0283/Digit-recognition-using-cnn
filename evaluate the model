@@ -1,0 +1,8 @@
+test_loss, test_accuracy = model.evaluate(
+    x_test,
+    y_test,
+    verbose=1
+)
+
+print("Test Loss:", test_loss)
+print("Test Accuracy: {:.2f}%".format(test_accuracy * 100))
