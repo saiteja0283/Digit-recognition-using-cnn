@@ -1,0 +1,5 @@
+model = keras.models.load_model(
+    "handwritten_digit_cnn.keras"
+)
+
+print("Model loaded successfully!")
