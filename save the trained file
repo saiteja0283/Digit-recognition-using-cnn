@@ -1,0 +1,3 @@
+model.save("handwritten_digit_cnn.keras")
+
+print("Model saved successfully!")
