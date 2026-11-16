@@ -1,0 +1,31 @@
+def predict_digit(image_path):
+
+    # Preprocess uploaded image
+    processed_image, display_image = preprocess_image(image_path)
+
+    # Predict digit
+    prediction = model.predict(processed_image, verbose=0)
+
+    predicted_digit = np.argmax(prediction)
+
+    confidence = np.max(prediction) * 100
+
+    # Display image and result
+    plt.figure(figsize=(4, 4))
+
+    plt.imshow(display_image, cmap='gray')
+
+    plt.title(
+        "Predicted Digit: {}\nConfidence: {:.2f}%".format(
+            predicted_digit,
+            confidence
+        )
+    )
+
+    plt.axis('off')
+    plt.show()
+
+    print("Predicted Digit:", predicted_digit)
+    print("Confidence: {:.2f}%".format(confidence))
+
+    return predicted_digit
