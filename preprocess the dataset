@@ -1,0 +1,9 @@
+x_train = x_train.astype("float32") / 255.0
+x_test = x_test.astype("float32") / 255.0
+
+# Reshape images for CNN
+x_train = x_train.reshape(-1, 28, 28, 1)
+x_test = x_test.reshape(-1, 28, 28, 1)
+
+print("Training shape:", x_train.shape)
+print("Testing shape:", x_test.shape)
