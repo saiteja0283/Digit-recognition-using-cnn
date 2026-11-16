@@ -1,0 +1,8 @@
+history = model.fit(
+    x_train,
+    y_train,
+    epochs=5,
+    batch_size=128,
+    validation_split=0.1,
+    verbose=1
+)
