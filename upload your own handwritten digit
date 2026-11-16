@@ -1,0 +1,46 @@
+import ipywidgets as widgets
+from IPython.display import display, clear_output
+
+upload_button = widgets.FileUpload(
+    accept='image/*',
+    multiple=False,
+    description='Upload Image'
+)
+
+output = widgets.Output()
+
+def on_upload(change):
+
+    with output:
+
+        clear_output()
+
+        uploaded = upload_button.value
+
+        if not uploaded:
+            print("Please upload an image.")
+            return
+
+        if isinstance(uploaded, dict):
+            file_info = next(iter(uploaded.values()))
+        else:
+            file_info = uploaded[0]
+
+        image_data = file_info['content']
+
+        filename = os.path.basename(
+            file_info.get('name', 'digit.png')
+        )
+
+        with open(filename, 'wb') as f:
+            f.write(bytes(image_data))
+
+        try:
+            predict_digit(filename)
+
+        except Exception as e:
+            print("Error:", e)
+
+upload_button.observe(on_upload, names='value')
+
+display(upload_button, output)
