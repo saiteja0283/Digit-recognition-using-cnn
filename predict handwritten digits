@@ -1,0 +1,23 @@
+predictions = model.predict(x_test[:10])
+
+predicted_labels = np.argmax(predictions, axis=1)
+
+plt.figure(figsize=(12, 5))
+
+for i in range(10):
+
+    plt.subplot(2, 5, i + 1)
+
+    plt.imshow(x_test[i].reshape(28, 28), cmap='gray')
+
+    plt.title(
+        "Predicted: {}\nActual: {}".format(
+            predicted_labels[i],
+            y_test[i]
+        )
+    )
+
+    plt.axis('off')
+
+plt.tight_layout()
+plt.show()
