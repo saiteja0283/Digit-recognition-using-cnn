@@ -1,0 +1,26 @@
+model = keras.Sequential([
+    
+    keras.Input(shape=(28, 28, 1)),
+
+    # First Convolution Layer
+    layers.Conv2D(32, (3, 3), activation='relu'),
+    layers.MaxPooling2D((2, 2)),
+
+    # Second Convolution Layer
+    layers.Conv2D(64, (3, 3), activation='relu'),
+    layers.MaxPooling2D((2, 2)),
+
+    # Flatten Layer
+    layers.Flatten(),
+
+    # Fully Connected Layer
+    layers.Dense(128, activation='relu'),
+
+    # Dropout Layer
+    layers.Dropout(0.3),
+
+    # Output Layer (10 digits)
+    layers.Dense(10, activation='softmax')
+])
+
+model.summary()
